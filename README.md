@@ -6,13 +6,13 @@ A scalable, pure gate-level implementation of **Grover's Search Algorithm** buil
 
 ## Technical Overview
 
-Grover's algorithm searches an unstructured database of size $N = 2^n$ in $\mathcal{O}(\sqrt{N})$ queries compared to the classical complexity \mathcal{O}(N).
+Grover's algorithm searches an unstructured database of size $N = 2^n$ in $\mathcal{O}(\sqrt{N})$ queries compared to the classical complexity $\mathcal{O}(N)$.
 
 Key components of this implementation:
 - **Uniform Superposition:** Initializes the 12-qubit register into equal superposition across all 4,096 basis states via parallel Hadamard transformations.
-- **Bitwise Phase Oracle:** Dynamically synthesizes the marking operator for any arbitrary integer target by applying bit-flip ($X$) masks to map \vert{}x_{\text{target}}\rangle \to \vert{}11\dots1\rangle, executing a multi-controlled phase flip, and uncomputing the basis transformations.
+- **Bitwise Phase Oracle:** Dynamically synthesizes the marking operator for any arbitrary integer target by applying bit-flip ($X$) masks to map $\vert{}x_{\text{target}}\rangle \to \vert{}11\dots1\rangle$, executing a multi-controlled phase flip, and uncomputing the basis transformations.
 - **Multi-Controlled Phase Flip ($MCZ$):** Conjugates a multi-controlled Toffoli gate (`MCXGate`) across $n-1$ controls with target Hadamard gates to implement an $n$-qubit reflection operator.
-- **Grover Diffuser (Inversion About the Mean):** Implements 2\vert{}\psi\rangle\langle\psi\vert{} - I$ using $H^{\otimes n} X^{\otimes n} (MCZ) X^{\otimes n} H^{\otimes n}$ to amplify the probability amplitude of the marked state while suppressing non-target amplitudes.
+- **Grover Diffuser (Inversion About the Mean):** Implements $2\vert{}\psi\rangle\langle\psi\vert{}$ - I$ using $H^{\otimes n} X^{\otimes n} (MCZ) X^{\otimes n} H^{\otimes n}$ to amplify the probability amplitude of the marked state while suppressing non-target amplitudes.
 - **Optimal Step Scheduling:** Automatically computes the theoretical optimal iteration count $R \approx \left\lfloor \frac{\pi}{4}\sqrt{N} \right\rfloor$ ($R = 50$ iterations for $N = 4096$) to avoid over-rotation.
 
 ---
